@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap");
+
+html,
+button,
+input,
+select,
+textarea,
+.pure-g [class*="pure-u"] {
+  /* Set your content font stack here: */
+  font-family: "Ubuntu", sans-serif;
+}
