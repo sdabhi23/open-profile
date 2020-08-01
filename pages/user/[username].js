@@ -3,22 +3,24 @@ import { setContext } from '@apollo/client/link/context';
 
 import Head from 'next/head'
 
+import styles from '../css/user.module.css'
+
 const httpLink = createHttpLink({
-    uri: 'https://api.github.com/graphql',
+  uri: 'https://api.github.com/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
-    return {
-        headers: {
-            ...headers,
-            authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-        }
+  return {
+    headers: {
+      ...headers,
+      authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
     }
+  }
 });
 
 const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache()
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
 });
 
 const dataQuery = gql`query UserInfo($username: String!) {
@@ -114,33 +116,38 @@ const dataQuery = gql`query UserInfo($username: String!) {
   }`
 
 export const getServerSideProps = async ctx => {
-    const res = await client.query({
-        query: dataQuery,
-        variables: {
-            username: ctx.params.username
-        }
-    })
-        .then(gqlres => gqlres.data)
-        .catch(gqlres => gqlres)
-    const data = await res
-    // Pass data to the page via props
-    return { props: { data } }
+  const res = await client.query({
+    query: dataQuery,
+    variables: {
+      username: ctx.params.username
+    }
+  })
+    .then(gqlres => gqlres.data)
+    .catch(gqlres => gqlres)
+  const data = await res
+  // Pass data to the page via props
+  return { props: { data } }
 }
 
 const UserInfo = ({ data }) => {
 
-    return (
-        <div>
-            <Head>
-                <title>{data.user.login} | OpenProfile</title>
-            </Head>
+  return (
+    <div>
+      <Head>
+        <title>{data.user.login} | OpenProfile</title>
+      </Head>
 
 
-            <main>
-                Username: {data.user.login}
-            </main>
-        </div>
-    )
+      <main>
+        <main className={styles.main_div}>
+          <h1 className={styles.header}>
+            <img className={styles.user_avatar} src={data.user.avatarUrl} />
+            {data.user.login}
+          </h1>
+        </main>
+      </main>
+    </div>
+  )
 }
 
 export default UserInfo

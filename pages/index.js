@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
-import styles from './main.module.css'
+import styles from './css/main.module.css'
 
 const preventDefault = f => e => {
   e.preventDefault()

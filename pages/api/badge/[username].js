@@ -4,22 +4,22 @@ import { setContext } from '@apollo/client/link/context';
 const fetch = require("node-fetch");
 
 const httpLink = createHttpLink({
-    uri: 'https://api.github.com/graphql',
-    fetch: fetch
+  uri: 'https://api.github.com/graphql',
+  fetch: fetch
 });
 
 const authLink = setContext((_, { headers }) => {
-    return {
-        headers: {
-            ...headers,
-            authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-        }
+  return {
+    headers: {
+      ...headers,
+      authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
     }
+  }
 });
 
 const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache()
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache()
 });
 
 const dataQuery = gql`query UserInfo($username: String!) {
@@ -117,33 +117,33 @@ const dataQuery = gql`query UserInfo($username: String!) {
 const secret = process.env.DATA_TOKEN
 
 const fetchGQL = username => {
-    return client.query({
-        query: dataQuery,
-        variables: {
-            username: username
-        }
-    })
-        .then(gqlres => gqlres.data)
-        .catch(gqlres => gqlres)
+  return client.query({
+    query: dataQuery,
+    variables: {
+      username: username
+    }
+  })
+    .then(gqlres => gqlres.data)
+    .catch(gqlres => gqlres)
 }
 
 export default async (req, res) => {
 
-    const { body: {
-        username, access_token
-    }, method } = req
+  const { body: {
+    username, access_token
+  }, method } = req
 
-    console.log(username, method)
+  console.log(username, method)
 
-    if (method === "POST") {
-        if (access_token === secret) {
-            const promised = await fetchGQL(username)
-            res.json(promised)
-        } else {
-            res.statusCode = 401
-            res.json({
-                error: "missing token"
-            })
-        }
+  if (method === "POST") {
+    if (access_token === secret) {
+      const promised = await fetchGQL(username)
+      res.json(promised)
+    } else {
+      res.statusCode = 401
+      res.json({
+        error: "missing token"
+      })
     }
+  }
 }

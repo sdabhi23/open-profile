@@ -1,0 +1,19 @@
+.main_div {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #e3e3e3;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 1.5rem;
+  background-color: #ffffff;
+}
+
+.user_avatar {
+  height: 1.5em;
+  margin-right: 0.5em;
+  border-radius: 5px;
+}
