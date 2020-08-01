@@ -26,11 +26,11 @@ export default () => {
   return (
     <div className="container">
       <Head>
-        <title>UserStats</title>
+        <title>OpenProfile</title>
       </Head>
 
       <main className={styles.main_div}>
-        <h1 className={styles.header}>User Stats</h1>
+        <h1 className={styles.header}>OpenProfile</h1>
 
         <div className={styles.content}>
           <h1 className={styles.tagline}>Create and share your open-source profile</h1>

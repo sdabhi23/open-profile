@@ -1,7 +1,6 @@
 import { ApolloClient, createHttpLink, gql, InMemoryCache } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-import { useRouter } from 'next/router'
 import Head from 'next/head'
 
 const httpLink = createHttpLink({
@@ -133,7 +132,7 @@ const UserInfo = ({ data }) => {
     return (
         <div>
             <Head>
-                <title>{data.user.login} | UserStats</title>
+                <title>{data.user.login} | OpenProfile</title>
             </Head>
 
 
